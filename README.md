@@ -66,3 +66,5 @@ Feel free to open issues or submit pull requests for improvements!
 📜 License
 
 Open-source under the MIT License.
+© 2025 Pratik. All rights reserved.
+
