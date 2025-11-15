@@ -37,20 +37,6 @@ AI/
 
 ---
 
-## ▶️ Getting Started
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/your-username/AI-WebApp.git
-   ```
-2. Open:
-   ```
-   index.html
-   ```
-3. Login or register  
-4. Open **gemini.html** to use the AI chat interface
-
----
-
 ## 🔮 Future Enhancements
 - Real AI API integration  
 - Chat history  
