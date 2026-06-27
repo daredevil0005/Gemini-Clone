@@ -8,7 +8,7 @@ const themeToggleBtn = document.querySelector("#theme-toggle-btn");
 
 // API Setup
 import { API_KEY } from "./config.js";
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 let controller, typingInterval;
 const chatHistory = [];
 const userData = { message: "", file: {} };
@@ -191,6 +191,5 @@ document.getElementById("download-chat-btn").addEventListener("click", () => {
     a.download = "chat_history.txt";
     a.click();
 });
-
 
 
