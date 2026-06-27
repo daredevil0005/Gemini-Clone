@@ -54,9 +54,11 @@ This project demonstrates how to build a **frontend interface for AI systems**, 
 
 6. Import info.sql file(given inside the zip package in the database file folder)
 
-7. Run the script http://localhost/YOUR_FOLDER_NAME
+7. Also make Gemini API Key from google.ai.studio and paste it inside the js/config.js file
 
-8. Also make Gemini API Key from google.ai.studio and paste it inside the js/gemini.js file
+8. Make config.js file inside the js folder and paste this line: import { API_KEY } from "./config.js";
+
+9. Run the script http://localhost/YOUR_FOLDER_NAME
 
 
 ---
