@@ -72,12 +72,45 @@ const generateResponse = async (botMsgDiv) => {
     typingEffect(responseText, textElement, botMsgDiv);
     chatHistory.push({ role: "model", parts: [{ text: responseText }] });
   } catch (error) {
-    textElement.textContent = error.name === "AbortError" ? "Response generation stopped." : error.message;
+
+    let message;
+
+    if (error.name === "AbortError") {
+
+      message = "Response generation stopped.";
+
+    } else if (error.message.includes("high demand")) {
+
+      message = "🚦 Gemini is currently experiencing high demand. Please try again in a few moments.";
+
+    } else if (error.message.includes("429")) {
+
+      message = "⏳ Too many requests. Please wait a few seconds and try again.";
+
+    } else if (error.message.includes("API_KEY")) {
+
+      message = "🔑 Invalid Gemini API key.";
+
+    } else if (error.message.includes("403")) {
+
+      message = "🚫 Access denied. Check your API key and Gemini API permissions.";
+
+    } else {
+
+      message = error.message;
+
+    }
+
+    textElement.textContent = message;
     textElement.style.color = "#d62939";
+
+    console.error(error);
+
     botMsgDiv.classList.remove("loading");
     document.body.classList.remove("bot-responding");
     scrollToBottom();
-  } finally {
+
+} finally {
     userData.file = {};
   }
 };
