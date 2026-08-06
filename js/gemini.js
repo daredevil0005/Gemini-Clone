@@ -73,46 +73,43 @@ const generateResponse = async (botMsgDiv) => {
     chatHistory.push({ role: "model", parts: [{ text: responseText }] });
   } catch (error) {
 
-    let message;
+  let message;
 
-    if (error.name === "AbortError") {
+  if (error.name === "AbortError") {
+    message = "Response generation stopped.";
+  } else if (error.message.includes("high demand")) {
+    message = "🚦 Gemini is currently experiencing high demand. Please try again in a few moments.";
+  } else if (error.message.includes("429")) {
+    message = "⏳ Too many requests. Please wait a few seconds and try again.";
+  } else {
+    message = error.message;
+  }
 
-      message = "Response generation stopped.";
+  textElement.innerHTML = `
+    <div>${message}</div>
+    <button class="retry-btn">🔄 Retry</button>
+  `;
 
-    } else if (error.message.includes("high demand")) {
+  const retryBtn = textElement.querySelector(".retry-btn");
 
-      message = "🚦 Gemini is currently experiencing high demand. Please try again in a few moments.";
+  if (retryBtn) {
+    retryBtn.addEventListener("click", () => {
+      botMsgDiv.classList.add("loading");
+      generateResponse(botMsgDiv);
+    });
+  }
 
-    } else if (error.message.includes("429")) {
+  textElement.style.color = "#d62939";
 
-      message = "⏳ Too many requests. Please wait a few seconds and try again.";
+  console.error(error);
 
-    } else if (error.message.includes("API_KEY")) {
-
-      message = "🔑 Invalid Gemini API key.";
-
-    } else if (error.message.includes("403")) {
-
-      message = "🚫 Access denied. Check your API key and Gemini API permissions.";
-
-    } else {
-
-      message = error.message;
-
-    }
-
-    textElement.textContent = message;
-    textElement.style.color = "#d62939";
-
-    console.error(error);
-
-    botMsgDiv.classList.remove("loading");
-    document.body.classList.remove("bot-responding");
-    scrollToBottom();
+  botMsgDiv.classList.remove("loading");
+  document.body.classList.remove("bot-responding");
+  scrollToBottom();
 
 } finally {
-    userData.file = {};
-  }
+  userData.file = {};
+}
 };
 
 // Handle the form submission
